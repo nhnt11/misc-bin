@@ -1,0 +1,8 @@
+#!/bin/bash
+
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+key="$(cat "$dir/.conf_telegram_key")"
+chatid="$(cat "$dir/.conf_telegram_chatid")"
+
+curl -s https://api.telegram.org/bot$key/sendMessage -d text="$1" -d chat_id=$chatid &>/dev/null
