@@ -1,0 +1,102 @@
+[ui]
+username = Nihanth Subramanya <nhnt11@gmail.com>
+ssh = ssh -C
+ignore = ~/.hgignore
+editor = nano
+interface = curses
+
+[merge-tools]
+filemerge.executable = ~/.hgext/opendiff-w
+filemerge.args = $local $other -ancestor $base -merge $output
+
+[defaults]
+qnew = -Ue
+qseries = -s
+qtop = -s
+
+[diff]
+git = true
+unified = 8
+showfunc = true
+
+[extensions]
+mq = 
+rebase = 
+progress = 
+histedit = 
+reviewboard = ~/.mozbuild/version-control-tools/hgext/reviewboard/client.py
+firefoxtree = ~/.mozbuild/version-control-tools/hgext/firefoxtree
+fsmonitor = 
+push-to-try = /Users/nhnt11/.mozbuild/version-control-tools/hgext/push-to-try
+evolve = ~/.mozbuild/version-control-tools/hgext/evolve/hgext/evolve.py
+
+[alias]
+fexport = export
+export = !$HG fexport $@ | sed '5d;6d'
+flog = log
+log = log --limit 15
+qnh = !$HG qheader $($HG qnext)
+qqtop = !$HG qtop | cut -f 1 -d ":"
+ddiff = diff
+qqdiff = qdiff
+diff = !printf '\e[9;1t'; sleep 0.25; $HG ddiff $@ | cdiff -s -w 0; printf '\e[9;0t'
+bdiff = !printf '\e[9;1t'; sleep 0.25; $HG ddiff -r .~1 | cdiff -s -w 0; printf '\e[9;0t'
+qdiff = !printf '\e[9;1t'; sleep 0.25; $HG qqdiff $@ | cdiff -s -w 0; printf '\e[9;0t'
+pdiff = !$HG ddiff | pbcopy
+wwip = log --graph --rev=wip --template=wip
+wip = log --graph --rev=wip --template=wip
+#wip = !printf '\e[9;1t'; sleep 0.25; $HG wwip; printf '\e[9;0t'
+pullr = !$HG up central && $HG pull && cat .hg/bookmarks | grep patch | cut -d ' ' -f 2 | xargs -I@ sh -c 'echo "\033[33mRebasing @...\033[0m"; $HG rebase -b "@" -d central;'; echo "\033[33mUpdating working directory to latest central...\033[0m"; hg up central;
+afcommit = !$HG qimport -r "descendants(.) and not . and not public()" && export ____book=$(cat .hg/bookmarks.current) && $HG qpop -a && $HG commit --amend && $HG bookmark "____rev" && $HG qpush -a && $HG qfinish -a && $HG bookmark $____book && $HG up ____rev && $HG bookmark --delete ____rev
+camend = !$HG commit --amend -m "$($HG parent | grep summary | cut -f 2- -d ':' | sed -e 's/^[[:space:]]*//')"
+autobook = !$HG book "$($HG parent | grep Bug | tr -s ' ' | cut -f 3 -d ' ')".patch -f
+cleanbook = !cat .hg/bookmarks | grep patch | cut -d ' ' -f 2 | xargs -I@ sh -c 'hg book --delete @'
+ub = !$HG up $@ && $HG au && hg parent | grep summary | cut -f 2 -d ':'
+
+[paths]
+review = ssh://reviewboard-hg.mozilla.org/autoreview
+[revsetalias]
+wip = (parents(not public()) or not public() or . or (head() and branch(default))) and (not obsolete() or unstable()^) and not closed() and not (fxheads() - date(-90))
+[templates]
+wip = '{label("wip.branch", if(branches,"{branches} "))}{label(ifeq(graphnode,"x","wip.obsolete","wip.{phase}"),"{rev}:{node|short}")}{label("wip.user", " {author|user}")}{label("wip.tags", if(tags," {tags}"))}{label("wip.tags", if(fxheads," {fxheads}"))}{if(bookmarks," ")}{label("wip.bookmarks", if(bookmarks,bookmarks))}{label(ifcontains(rev, revset("parents()"), "wip.here"), " {desc|firstline}")}'
+[mozilla]
+ircnick = nhnt11
+
+[color]
+mode = terminfo
+
+#Custom colours
+color.orange = 202
+color.lightyellow = 191
+color.darkorange = 220
+color.brightyellow = 226
+color.lightblue = 027
+
+#Colours for each label
+log.branch = cyan
+log.summary = lightyellow
+log.description = lightyellow
+log.bookmark = yellow
+log.tag = darkorange
+log.activebookmark = brightyellow bold underline
+
+changeset.public = orange bold
+changeset.draft = green
+
+desc.here = bold lightblue_background
+wip.bookmarks = yellow underline
+wip.branch = yellow
+wip.draft = green
+wip.here = red
+wip.obsolete = none
+wip.public = blue
+wip.tags = yellow
+wip.user = magenta
+
+[hostsecurity]
+bugzilla.mozilla.org:fingerprints = sha256:10:95:a8:c1:e1:c3:18:fa:e4:95:40:99:11:07:6d:e3:79:ab:e5:b0:29:50:ff:40:e8:e8:63:c4:fd:f3:9f:cb
+[experimental]
+graphshorten = true
+
+[pager]
+ignore = wwip, stat
