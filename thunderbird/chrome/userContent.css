@@ -1,0 +1,17 @@
+#Chat {
+    font: menu !important;
+}
+
+span.date-next {
+    margin-top: 0 !important;
+}
+
+.date {
+    opacity: 0.3;
+    transition: opacity 0.1s ease-in-out;
+}
+
+.event:hover > .date,
+.message:hover > .date {
+    opacity: 1;
+}

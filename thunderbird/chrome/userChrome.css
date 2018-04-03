@@ -1,0 +1,61 @@
+#tabs-toolbar {
+    visibility: hidden;
+}
+
+#tabmail-container {
+    margin-top: -30px;
+}
+
+#chat-view-toolbox {
+    -moz-appearance: -moz-window-titlebar !important;
+}
+
+#chat-toobar {
+    margin-inline-start: 75px;
+}
+
+#titlebar-content {
+    margin-block-start: 9px;
+}
+
+#ibcontent,
+.conv-textbox {
+    font: menu !important;
+}
+
+#contextPaneFlexibleBox {
+    height: 100%;
+}
+
+#contextPane {
+  max-width: 0;
+  margin-inline-end: -1px;
+  transition: max-width 0.2s ease-in-out;
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  height: 100%;
+  border-inline-start: 1px solid #bdbdbd;
+}
+
+#contextPane:hover,
+#contextSplitter:hover ~ #contextPane {
+  max-width: 200px;
+}
+
+#contextSplitter {
+  margin-inline-start: -19px !important;
+  width: 20px !important;
+}
+
+#chatTabPanel > hbox {
+    position: relative;
+}
+
+#Chat {
+    font: menu !important;
+}
+
+#status-bar {
+  display: none;
+}
