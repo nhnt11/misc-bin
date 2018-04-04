@@ -77,3 +77,5 @@ alias _mx="printf '\e[9;1t';"
 alias _rs="printf '\e[9;0t';"
 
 source /Users/nhnt11/.cargo/env
+
+export PATH="$HOME/.cargo/bin:$PATH"

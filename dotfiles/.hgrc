@@ -28,7 +28,7 @@ reviewboard = ~/.mozbuild/version-control-tools/hgext/reviewboard/client.py
 firefoxtree = ~/.mozbuild/version-control-tools/hgext/firefoxtree
 fsmonitor = 
 push-to-try = /Users/nhnt11/.mozbuild/version-control-tools/hgext/push-to-try
-evolve = ~/.mozbuild/version-control-tools/hgext/evolve/hgext/evolve.py
+evolve =
 
 [alias]
 fexport = export
